@@ -1,21 +1,12 @@
 # Mortgage_Calculator V 1.0.0
 
-# The major variables in a mortgage calculation include, number of payments per year, total number of payments and
-# the regular payment amount.
-
-# More complex calculators can take into account other costs associated with a mortgage, such as local and
-# state taxes, and insurance.
-
 class Emi:
-    city = str(input('Enter City ='))
+    city = str(input('Enter City (Bangalore, Delhi, Mumbai, Chennai, Kolkata) ='))
+    # at this Moment Only Main Indian Cities are defined
     home_value = float(input('Home Value ='))
-    down_payment = float(input('Specify Down payment='))  # down payment is the payment that will be paid at start
-    interest_rate = float(input('Yearly Interest rate='))  # yearly interest rate
+    down_payment = float(input('Specify Down payment='))  # down payment is the payment that will be paid at start.
+    interest_rate = float(input('Yearly Interest rate='))  # yearly interest rate.
     loan_term = float(input('Loan_Term in years ='))  # loan_Term is the period of total loan payment
-    # def __self__(self, city):  # country can be added here
-    #     self.city = str(input('Enter City ='))
-    #     self.
-    #     # self.country = str(input('Enter Country ='))
 
     def cal_principal(self):
         stamp_duty = Emi.home_value * city_stamp_duty.get(Emi.city)
@@ -23,7 +14,7 @@ class Emi:
 
         principal = Emi.home_value - Emi.down_payment + stamp_duty + registration_charges
 
-        return principal     # principal amount
+        return principal, stamp_duty, registration_charges
 
     def cal_monthly_installment(self):
         r1 = Emi.interest_rate / (100 * 12)     # r1 =  monthly interest rate
@@ -44,20 +35,21 @@ class Emi:
 
 city_stamp_duty = {'Bangalore': 0.03,'Delhi':0.06,'Mumbai': 0.05, 'Chennai': 0.07,'Kolkata': 0.05}
 
-principal_amount = Emi().cal_principal()
-print(principal_amount)
-
+principal_amount = Emi().cal_principal()[0]
+stamp_duty_amount = Emi().cal_principal()[1]
+reg_amount = Emi().cal_principal()[2]
 monthly_emi_amount = Emi().cal_monthly_installment()[0]
-print(monthly_emi_amount)
+number_of_installment = Emi().cal_monthly_installment()[1]
+
+print()
+print('In {} for the Home Value around {} Rs,\n the total principal amount is {} Rs. \n which includes stamp duty amount'
+      ' {} Rs and registration charges {} Rs.'.format(Emi.city, Emi.home_value, principal_amount, stamp_duty_amount,
+                                                     reg_amount))
+
+print()
+print('Now, if yearly Interest rate is {} % and Loan Term is {} years'.format(Emi.interest_rate, Emi.loan_term))
+print('then you will need to pay monthly emi {} Rs.'.format(round(monthly_emi_amount,2)))
 
 
-# home_value = float(input('Home Value ='))  # total home Value
-# down_payment = float(input('Specify Down payment='))  # down payment is the payment that will be paid at start
-# interest_rate = float(input('Yearly Interest rate='))  # yearly interest rate
-# loan_term = float(input('Loan_Term in years ='))  # loan_Term is the period of total loan payment
-# monthly_payment , total_installment = monthly_installment(home_value, down_payment,
-#                                                                             interest_rate, loan_term)
-# print('Principal amount is {} Rs'.format(principal_amount))
-# print('Total Monthly Payment is {} Rs'.format(monthly_payment))
-# print('Processing Fees = {} Rs'.format(min(principal_amount*0.01,5000)))
+
 
